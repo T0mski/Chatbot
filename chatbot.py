@@ -65,10 +65,10 @@ class Chatbot(Chat):
             if score > best_score:
                 best_score = score
                 best_response = response
-            print(f"question: {question}, score: {score}, response: {response}")
+            #print(f"question: {question}, score: {score}, response: {response}")
         if best_score < 0.1:
             best_response = "Sorry, can you rephrase that?"
-        print(f"Best Score: {best_score}, Best Response: {best_response}")
+        #print(f"Best Score: {best_score}, Best Response: {best_response}")
         return best_response
     
     @staticmethod
@@ -96,7 +96,12 @@ class Chatbot(Chat):
 
 def main():
     my_chatbot = Chatbot(response_pairs, reflections)
-    print("Hello! I'm your chatbot, Type quit to exit.")
+    print("-" * 60)
+    print("Welcome to the Exam Season Chatbot!".center(60))
+    print("-" * 60)
+    print("There are a range of questions you can ask about the exam season.".center(60))
+    print("-" * 60)
+    print("Hello! I'm your chatbot, Type quit to exit.".center(60))
 
     while True:
         user_input = input("> ")
