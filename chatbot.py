@@ -29,7 +29,7 @@ response_pairs = [
     (r"What should I do if I arrive late to an exam? ", ["Depending on the module and the lecturer you may have to wait till a different slot, have to resit at a later time or try to complete the exam in the time remaining."]),
     (r"Are there any restrictions on personal items in the exam room?", ["Yes, smart devices and notes are banned."]),
     (r"What is the policy on bathroom breaks during exams? ", ["You are not allow to leave the room without the permition of an invigilator and cannot go in the first hour or last 30 mins of the exam."]),
-    (r"Can I bring a snack or drink into the exam room? ", ["Yes, small snacks and bottled drinks are allowed."]),
+    (r"Can I bring a (snack*, food*) or drink into the exam room? ", ["Yes, small snacks and bottled drinks are allowed."]),
     (r"How long are the exam periods and are there breaks between exams? ", ["Exam periods are usually 2-3 weeks with one exam per day."]),
     (r"Are there designated quiet study areas on campus during exam season? ", ["Yes, the university has 2 libraries and designated study areas in the Catalyst, Mellor and Cadman Buildings."]),
     (r"Are there any workshops or tutoring services available to help with exam preparation? ", ["Yes but it will depend on the module and course."]),
@@ -65,9 +65,10 @@ class Chatbot(Chat):
             if score > best_score:
                 best_score = score
                 best_response = response
-        if best_score < 0.15:
+            print(f"question: {question}, score: {score}, response: {response}")
+        if best_score < 0.1:
             best_response = "Sorry, can you rephrase that?"
-        print(f"Question: {question}, Score: {score}, Response: {response}, Best Score: {best_score}, Best Response: {best_response}")
+        print(f"Best Score: {best_score}, Best Response: {best_response}")
         return best_response
     
     @staticmethod
