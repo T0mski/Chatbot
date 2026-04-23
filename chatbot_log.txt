@@ -1,0 +1,2 @@
+2026-04-23 15:08:28: User Input: (['time'], ['time', 'exam']), Response: Usually there are no materials allowed in the exam but some assessments allow open book., Score: 0.25
+2026-04-23 15:37:06: User Input: (['anxieti'], ['anxieti', 'regard', 'exam', 'deadlin']), Response: Yes, you can book a wellbeing appointment at any point. They can be face to face or online., Score: 0.39285714285714285

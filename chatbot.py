@@ -7,6 +7,7 @@ import datetime
 nltk.download('punkt', quiet=True)
 nltk.download('stopwords')
 nltk.download('punkt_tab')
+nltk.download('averaged_perceptron_tagger_eng')
 
 response_pairs = [
     (r"hi|hello|hey", ["Hello!", "Hi there!", "Hey!"]),
@@ -51,18 +52,36 @@ response_pairs = [
 class Chatbot(Chat):
     def __init__(self, pairs, reflections):
         super().__init__(pairs, reflections)
-        self.stemmed_token_pairs = []
+        self.preprocessedText = []
         
         for question, response in pairs:
-            pair = (Chatbot.languageProcessing(question), response)
-            self.stemmed_token_pairs.append(pair)
+            processed_question = self.languageProcessing(question)
+            pair = (processed_question[0], processed_question[1], response[0])
+            self.preprocessedText.append(pair)
+
         
+    def log(self, message):
+        with open("chatbot_log.txt", "a") as log_file:
+            log_file.write(f"{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}: {message}\n")
+    
+        #datastruct = list(set(tuple(str,str)), str)
     def similarityScore(self, userinput):
         userinput = self.languageProcessing(userinput)
+        
         best_score = 0
         best_response = "Sorry, can you rephrase that?"
-        for question, response in self.stemmed_token_pairs:
-            score = len(userinput.intersection(question)) / len(userinput.union(question))
+        for high_set, low_set, response in self.preprocessedText:
+            jaccard_full = len(set(userinput[1]).intersection(set(low_set))) / len(set(userinput[1]).union(set(low_set)))
+            if high_set == [] or userinput[0] == []:
+                score = jaccard_full
+            else:
+                jaccard_high = len(set(userinput[0]).intersection(set(high_set))) / len(set(userinput[0]).union(set(high_set)))
+                score = (jaccard_high * 0.7) + (jaccard_full * 0.3)
+
+            
+
+            #final_score = (jaccard_high * 0.7) + (jaccard_full * 0.3)
+
             if score > best_score:
                 best_score = score
                 best_response = response
@@ -70,6 +89,8 @@ class Chatbot(Chat):
         if best_score < 0.1:
             best_response = "Sorry, can you rephrase that?"
         #print(f"Best Score: {best_score}, Best Response: {best_response}")
+        if best_response != "Sorry, can you rephrase that?":
+            self.log(f"User Input: {userinput}, Response: {best_response}, Score: {best_score}")
         return best_response
     
     @staticmethod
@@ -88,16 +109,22 @@ class Chatbot(Chat):
             if word not in stopwords.words("english"):
                 stopword_tokenized.append(word)
 
-        stemmed = []
-        for word in stopword_tokenized:
-            stemmed.append(stemmer.stem(word))
+        pos_tagged = nltk.pos_tag(stopword_tokenized)
+        high_set = []
+        full_set = []
+        for tuple in pos_tagged:
+            if tuple[1] in ["NN", "VB",]:
+                high_set.append(stemmer.stem(tuple[0]))
+            full_set.append(stemmer.stem(tuple[0]))
 
-        return set(stemmed)
+        
+            
+        return (high_set, full_set)
 
 
 def main():
     my_chatbot = Chatbot(response_pairs, reflections)
-    
+
     time = datetime.datetime.now().strftime("%H:%M:%S")
     greeting = "Good Afternoon"
     if time < "12:00:00":
@@ -114,7 +141,8 @@ def main():
         user_input = input("> ")
         if user_input.lower() == "quit":
             break
-
+        
+        print(my_chatbot.languageProcessing(user_input))
         responce = my_chatbot.respond(user_input)
         if responce is None:
             responce = my_chatbot.similarityScore(user_input)
