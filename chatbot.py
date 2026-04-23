@@ -2,6 +2,7 @@ import nltk
 from nltk.chat.util import Chat, reflections
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
+import datetime
 
 nltk.download('punkt', quiet=True)
 nltk.download('stopwords')
@@ -29,7 +30,7 @@ response_pairs = [
     (r"What should I do if I arrive late to an exam? ", ["Depending on the module and the lecturer you may have to wait till a different slot, have to resit at a later time or try to complete the exam in the time remaining."]),
     (r"Are there any restrictions on personal items in the exam room?", ["Yes, smart devices and notes are banned."]),
     (r"What is the policy on bathroom breaks during exams? ", ["You are not allow to leave the room without the permition of an invigilator and cannot go in the first hour or last 30 mins of the exam."]),
-    (r"Can I bring a (snack*, food*) or drink into the exam room? ", ["Yes, small snacks and bottled drinks are allowed."]),
+    (r"Can I bring a (snack* | food*) or drink into the exam room? ", ["Yes, small snacks and bottled drinks are allowed."]),
     (r"How long are the exam periods and are there breaks between exams? ", ["Exam periods are usually 2-3 weeks with one exam per day."]),
     (r"Are there designated quiet study areas on campus during exam season? ", ["Yes, the university has 2 libraries and designated study areas in the Catalyst, Mellor and Cadman Buildings."]),
     (r"Are there any workshops or tutoring services available to help with exam preparation? ", ["Yes but it will depend on the module and course."]),
@@ -96,12 +97,18 @@ class Chatbot(Chat):
 
 def main():
     my_chatbot = Chatbot(response_pairs, reflections)
+    
+    time = datetime.datetime.now().strftime("%H:%M:%S")
+    greeting = "Good Afternoon"
+    if time < "12:00:00":
+        greeting = "Good Morning"
+    
     print("-" * 60)
     print("Welcome to the Exam Season Chatbot!".center(60))
     print("-" * 60)
     print("There are a range of questions you can ask about the exam season.".center(60))
     print("-" * 60)
-    print("Hello! I'm your chatbot, Type quit to exit.".center(60))
+    print(f"{greeting}! I'm your chatbot, Type quit to exit.".center(60))
 
     while True:
         user_input = input("> ")
