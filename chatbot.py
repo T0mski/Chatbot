@@ -3,6 +3,10 @@ from nltk.chat.util import Chat, reflections
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
 import datetime
+from time import sleep
+from gtts import gTTS
+import pyglet
+import os
 
 nltk.download('punkt', quiet=True)
 nltk.download('stopwords')
@@ -59,7 +63,17 @@ class Chatbot(Chat):
             pair = (processed_question[0], processed_question[1], response[0])
             self.preprocessedText.append(pair)
 
-        
+    @staticmethod
+    def TTS(text):
+        filename = "/tmp/temp.mp3"
+        tts = gTTS(text)
+        tts.save(filename)
+        music = pyglet.media.load(filename, streaming=False)
+        music.play()
+        sleep(music.duration)
+        os.remove(filename)
+
+
     def log(self, message):
         with open("chatbot_log.txt", "a") as log_file:
             log_file.write(f"{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}: {message}\n")
@@ -140,12 +154,16 @@ def main():
     while True:
         user_input = input("> ")
         if user_input.lower() == "quit":
+            responce = "Goodbye! Have a great day!"
+            my_chatbot.TTS(responce)
+            print(responce)
             break
         
         print(my_chatbot.languageProcessing(user_input))
         responce = my_chatbot.respond(user_input)
         if responce is None:
             responce = my_chatbot.similarityScore(user_input)
+        my_chatbot.TTS(responce)
         print(responce)
 
 if __name__ == "__main__":
