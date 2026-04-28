@@ -65,20 +65,19 @@ class Chatbot(Chat):
 
     @staticmethod
     def TTS(text):
-        filename = "/tmp/temp.mp3"
+        filename = "./tmp/temp.mp3"
         tts = gTTS(text)
         tts.save(filename)
-        music = pyglet.media.load(filename, streaming=False)
-        music.play()
-        sleep(music.duration)
-        os.remove(filename)
-
+        tts_file = pyglet.media.load(filename, streaming=False)
+        tts_file.play()
+        return tts_file, filename
+        
 
     def log(self, message):
         with open("chatbot_log.txt", "a") as log_file:
             log_file.write(f"{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}: {message}\n")
     
-        #datastruct = list(set(tuple(str,str)), str)
+    #datastruct = list(set(tuple(str,str)), str)
     def similarityScore(self, userinput):
         userinput = self.languageProcessing(userinput)
         
@@ -92,18 +91,12 @@ class Chatbot(Chat):
                 jaccard_high = len(set(userinput[0]).intersection(set(high_set))) / len(set(userinput[0]).union(set(high_set)))
                 score = (jaccard_high * 0.7) + (jaccard_full * 0.3)
 
-            
-
-            #final_score = (jaccard_high * 0.7) + (jaccard_full * 0.3)
-
             if score > best_score:
                 best_score = score
                 best_response = response
-            #print(f"question: {question}, score: {score}, response: {response}")
         if best_score < 0.1:
             best_response = "Sorry, can you rephrase that?"
-        #print(f"Best Score: {best_score}, Best Response: {best_response}")
-        if best_response != "Sorry, can you rephrase that?":
+        if best_response == "Sorry, can you rephrase that?":
             self.log(f"User Input: {userinput}, Response: {best_response}, Score: {best_score}")
         return best_response
     
@@ -155,16 +148,20 @@ def main():
         user_input = input("> ")
         if user_input.lower() == "quit":
             responce = "Goodbye! Have a great day!"
-            my_chatbot.TTS(responce)
+            timing, filename = my_chatbot.TTS(responce)
             print(responce)
+            sleep(timing.duration)
+            os.remove(filename)
             break
         
-        print(my_chatbot.languageProcessing(user_input))
         responce = my_chatbot.respond(user_input)
         if responce is None:
             responce = my_chatbot.similarityScore(user_input)
-        my_chatbot.TTS(responce)
+        timing, filename = my_chatbot.TTS(responce)
         print(responce)
+        sleep(timing.duration)
+        os.remove(filename)
+        
 
 if __name__ == "__main__":
     main()

@@ -1,10 +1,10 @@
-2026-04-23 15:08:28: User Input: (['time'], ['time', 'exam']), Response: Usually there are no materials allowed in the exam but some assessments allow open book., Score: 0.25
-2026-04-23 15:37:06: User Input: (['anxieti'], ['anxieti', 'regard', 'exam', 'deadlin']), Response: Yes, you can book a wellbeing appointment at any point. They can be face to face or online., Score: 0.39285714285714285
-2026-04-27 21:05:25: User Input: (['take', 'food', 'exam'], ['take', 'food', 'exam']), Response: Yes, small snacks and bottled drinks are allowed., Score: 0.36571428571428566
-2026-04-27 21:18:54: User Input: (['take', 'food', 'exam'], ['take', 'food', 'exam']), Response: Yes, small snacks and bottled drinks are allowed., Score: 0.36571428571428566
-2026-04-27 21:19:11: User Input: (['find', 'time'], ['find', 'time', 'tabl']), Response: You can find exam related policies on black board under the exams banner., Score: 0.1775
-2026-04-27 21:20:20: User Input: (['take', 'food', 'exam'], ['take', 'food', 'exam']), Response: Yes, small snacks and bottled drinks are allowed., Score: 0.36571428571428566
-2026-04-27 21:20:33: User Input: (['find', 'time'], ['find', 'time', 'tabl']), Response: You can find exam related policies on black board under the exams banner., Score: 0.1775
-2026-04-27 21:22:16: User Input: (['take', 'food', 'exam'], ['take', 'food', 'exam']), Response: Yes, small snacks and bottled drinks are allowed., Score: 0.36571428571428566
-2026-04-27 21:22:55: User Input: (['find', 'timet'], ['find', 'exam', 'timet']), Response: You can access your timetable on Beacon, Score: 0.32499999999999996
-2026-04-27 21:23:10: User Input: (['take', 'food'], ['take', 'food', 'exam']), Response: Yes, small snacks and bottled drinks are allowed., Score: 0.2257142857142857
+2026-04-28 01:23:06: User Input: ([], ['c', 'e']), Response: Sorry, can you rephrase that?, Score: 0
+2026-04-28 01:23:10: User Input: ([], ['c', 'e']), Response: Sorry, can you rephrase that?, Score: 0
+2026-04-28 01:23:13: User Input: ([], ['c', 'e']), Response: Sorry, can you rephrase that?, Score: 0
+2026-04-28 01:23:19: User Input: ([], ['c', 'e']), Response: Sorry, can you rephrase that?, Score: 0
+2026-04-28 01:23:34: User Input: ([], ['c', 'e']), Response: Sorry, can you rephrase that?, Score: 0
+2026-04-28 01:23:51: User Input: ([], ['c', 'e']), Response: Sorry, can you rephrase that?, Score: 0
+2026-04-28 01:23:53: User Input: ([], ['c', 'e']), Response: Sorry, can you rephrase that?, Score: 0
+2026-04-28 01:23:56: User Input: ([], ['c', 'e']), Response: Sorry, can you rephrase that?, Score: 0
+2026-04-28 01:23:59: User Input: ([], ['c', 'e']), Response: Sorry, can you rephrase that?, Score: 0
+2026-04-28 01:24:04: User Input: (['qui'], ['qui']), Response: Sorry, can you rephrase that?, Score: 0
