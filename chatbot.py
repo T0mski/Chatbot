@@ -63,6 +63,7 @@ class Chatbot(Chat):
             pair = (processed_question[0], processed_question[1], response[0])
             self.preprocessedText.append(pair)
 
+
     @staticmethod
     def TTS(text):
         filename = "./tmp/temp.mp3"
@@ -127,6 +128,7 @@ class Chatbot(Chat):
         
             
         return (high_set, full_set)
+
 
 
 def main():
